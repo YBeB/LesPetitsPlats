@@ -1,0 +1,26 @@
+body {
+    margin: 0px;
+    padding: 0px;
+
+}
+
+header {
+    background: url("./icon/backgroundheader.jpg");
+    height: 90vh;
+    width: 100%;
+    background-size: cover;
+
+}
+.logo{padding: 70px;}
+
+h1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 400;
+    text-align: center;
+    font-family: 'Anton';
+    color:#FFD15B;
+    height: 50vh;
+    font-size: 50px;
+}
