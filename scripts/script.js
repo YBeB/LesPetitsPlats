@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   searchBar.addEventListener("input", () => {
     const searchTerm = searchBar.value;
-    if (searchTerm.length >= 2) {
+    if (searchTerm.length >= 3) {
       const filteredRecipes = filterRecipes(searchTerm);
       displayRecipes(filteredRecipes);
     } else {
