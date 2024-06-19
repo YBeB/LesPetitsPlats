@@ -1,5 +1,3 @@
-// dropdown.js
-
 const ingredientInput = document.getElementById('ingredient-input');
 const ingredientList = document.getElementById('ingredient-list');
 const ustensilInput = document.getElementById('ustensil-input');
@@ -13,7 +11,7 @@ let selectedTags = {
   appliances: []
 };
 
-// Fonction pour ajouter un tag
+// Ajouter un tag
 function addTag(type, value) {
   if (!selectedTags[type].includes(value)) {
     selectedTags[type].push(value);
@@ -37,7 +35,7 @@ function addTag(type, value) {
   }
 }
 
-// Fonction pour supprimer un tag
+// Supprimer un tag
 function removeTag(type, value, tagElement) {
   selectedTags[type] = selectedTags[type].filter(tag => tag !== value);
   tagElement.remove();
@@ -71,7 +69,6 @@ function updateRecipes() {
   const searchTerm = searchBar.value.toLowerCase();
   const data = getData();
   const filteredRecipes = data.filter(recipe => {
-    // Vérifier la concordance avec la barre de recherche
     const matchesSearchTerm = recipe.name.toLowerCase().includes(searchTerm) ||
       recipe.ingredients.some(ingredient =>
         ingredient.ingredient.toLowerCase().includes(searchTerm)
@@ -92,7 +89,6 @@ function updateRecipes() {
       recipe.appliance.toLowerCase() === tag.toLowerCase()
     );
 
-    // Retourner les recettes qui correspondent à la fois aux termes de recherche et aux tags
     return matchesSearchTerm && matchesTags;
   });
 
@@ -125,7 +121,7 @@ function displayDropdownItems(type, listElement, inputElement) {
   });
 }
 
-// Initialiser les éléments des dropdowns
+// Initialisation des éléments des dropdowns
 displayDropdownItems('ingredients', ingredientList, ingredientInput);
 displayDropdownItems('ustensils', ustensilList, ustensilInput);
 displayDropdownItems('appliances', applianceList, applianceInput);
@@ -135,7 +131,7 @@ searchBar.addEventListener('input', () => {
   updateRecipes();
 });
 
-// Initialiser les recettes et les dropdowns
+// Initialisation des recettes et des dropdowns
 document.addEventListener("DOMContentLoaded", () => {
   updateRecipes();
 });
