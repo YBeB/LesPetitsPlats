@@ -91,12 +91,17 @@ function filterRecipes(searchTerm) {
   const filteredRecipes = [];
   for (let i = 0; i < data.length; i++) {
     const recipe = data[i];
-    if (
-      recipe.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      recipe.ingredients.some((ingredient) =>
-        ingredient.ingredient.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    ) {
+    const recipeNameMatch = recipe.name.toLowerCase().includes(searchTerm.toLowerCase());
+    let ingredientMatch = false;
+
+    for (let a = 0; a < recipe.ingredients.length; a++) {
+      if (recipe.ingredients[j].ingredient.toLowerCase().includes(searchTerm.toLowerCase())) {
+        ingredientMatch = true;
+        break;
+      }
+    }
+
+    if (recipeNameMatch || ingredientMatch) {
       filteredRecipes.push(recipe);
     }
   }
