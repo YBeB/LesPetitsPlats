@@ -13,8 +13,8 @@ let selectedTags = {
 
 // Ajouter un tag
 function addTag(type, value) {
-  if (!selectedTags[type].includes(value)) {
-    selectedTags[type].push(value);
+  if (!selectedTags[type].includes(value.toLowerCase())) {
+    selectedTags[type].push(value.toLowerCase());
     const tag = document.createElement('span');
     tag.className = 'tag';
     tag.setAttribute('data-type', type);
@@ -37,15 +37,15 @@ function addTag(type, value) {
 
 // Supprimer un tag
 function removeTag(type, value, tagElement) {
-  selectedTags[type] = selectedTags[type].filter(tag => tag !== value);
+  selectedTags[type] = selectedTags[type].filter(tag => tag !== value.toLowerCase());
   tagElement.remove();
   updateRecipes();
 }
 
 function updateDropdownItems(filteredRecipes) {
-  const ingredients = [...new Set(filteredRecipes.flatMap(recipe => recipe.ingredients.map(i => i.ingredient)))];
-  const ustensils = [...new Set(filteredRecipes.flatMap(recipe => recipe.ustensils))];
-  const appliances = [...new Set(filteredRecipes.map(recipe => recipe.appliance))];
+  const ingredients = [...new Set(filteredRecipes.flatMap(recipe => recipe.ingredients.map(i => i.ingredient.toLowerCase())))];
+  const ustensils = [...new Set(filteredRecipes.flatMap(recipe => recipe.ustensils.map(u => u.toLowerCase())))];
+  const appliances = [...new Set(filteredRecipes.map(recipe => recipe.appliance.toLowerCase()))];
 
   updateDropdownList('ingredients', ingredientList, ingredients);
   updateDropdownList('ustensils', ustensilList, ustensils);
@@ -63,7 +63,6 @@ function updateDropdownList(type, listElement, items) {
   });
 }
 
-
 // Fonction pour mettre à jour les recettes en fonction des tags et de la barre de recherche
 function updateRecipes() {
   const searchTerm = searchBar.value.toLowerCase();
@@ -79,14 +78,14 @@ function updateRecipes() {
     // Vérifier la concordance avec les tags
     const matchesTags = selectedTags.ingredients.every(tag =>
       recipe.ingredients.some(ingredient =>
-        ingredient.ingredient.toLowerCase() === tag.toLowerCase()
+        ingredient.ingredient.toLowerCase() === tag
       )
     ) && selectedTags.ustensils.every(tag =>
       recipe.ustensils.some(ustensil =>
-        ustensil.toLowerCase() === tag.toLowerCase()
+        ustensil.toLowerCase() === tag
       )
     ) && selectedTags.appliances.every(tag =>
-      recipe.appliance.toLowerCase() === tag.toLowerCase()
+      recipe.appliance.toLowerCase() === tag
     );
 
     return matchesSearchTerm && matchesTags;
@@ -96,7 +95,6 @@ function updateRecipes() {
   updateDropdownItems(filteredRecipes);
 }
 
-
 // Fonction pour afficher les éléments disponibles dans la liste déroulante
 function displayDropdownItems(type, listElement, inputElement) {
   inputElement.addEventListener('input', (e) => {
@@ -105,11 +103,11 @@ function displayDropdownItems(type, listElement, inputElement) {
     const data = getData();
     let items = [];
     if (type === 'ingredients') {
-      items = [...new Set(data.flatMap(recipe => recipe.ingredients.map(i => i.ingredient)))];
+      items = [...new Set(data.flatMap(recipe => recipe.ingredients.map(i => i.ingredient.toLowerCase())))];
     } else if (type === 'ustensils') {
-      items = [...new Set(data.flatMap(recipe => recipe.ustensils))];
+      items = [...new Set(data.flatMap(recipe => recipe.ustensils.map(u => u.toLowerCase())))];
     } else if (type === 'appliances') {
-      items = [...new Set(data.map(recipe => recipe.appliance))];
+      items = [...new Set(data.map(recipe => recipe.appliance.toLowerCase()))];
     }
     items.filter(item => item.toLowerCase().includes(value)).forEach(item => {
       const itemElement = document.createElement('div');
